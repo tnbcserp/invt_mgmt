@@ -44,12 +44,12 @@ check_git() {
 # Initialize git repository
 init_git() {
     print_status "Initializing Git repository..."
-    
+
     if [ -d ".git" ]; then
         print_warning "Git repository already exists"
         return
     fi
-    
+
     git init
     print_success "Git repository initialized"
 }
@@ -57,31 +57,31 @@ init_git() {
 # Create initial commit
 create_commit() {
     print_status "Creating initial commit..."
-    
+
     # Add all files
     git add .
-    
+
     # Create commit
     git commit -m "Initial commit: Raw Material Inventory Management System"
-    
+
     print_success "Initial commit created"
 }
 
 # Setup remote repository
 setup_remote() {
     print_status "Setting up remote repository..."
-    
+
     echo ""
     echo "Please provide your GitHub repository URL:"
     echo "Example: https://github.com/yourusername/inventory-system.git"
     read -p "GitHub URL: " github_url
-    
+
     if [ -z "$github_url" ]; then
         print_warning "No GitHub URL provided. You can add it later with:"
         echo "git remote add origin YOUR_GITHUB_URL"
         return
     fi
-    
+
     git remote add origin "$github_url"
     print_success "Remote repository added: $github_url"
 }
@@ -89,7 +89,7 @@ setup_remote() {
 # Push to GitHub
 push_to_github() {
     print_status "Pushing to GitHub..."
-    
+
     if git remote -v | grep -q origin; then
         git push -u origin main
         print_success "Code pushed to GitHub"
@@ -103,33 +103,33 @@ push_to_github() {
 # Prepare for Vercel deployment
 prepare_vercel() {
     print_status "Preparing for Vercel deployment..."
-    
+
     # Check if frontend directory exists
     if [ ! -d "frontend" ]; then
         print_error "Frontend directory not found"
         return
     fi
-    
+
     # Navigate to frontend
     cd frontend
-    
+
     # Check if package.json exists
     if [ ! -f "package.json" ]; then
         print_error "package.json not found in frontend directory"
         cd ..
         return
     fi
-    
+
     # Install dependencies if node_modules doesn't exist
     if [ ! -d "node_modules" ]; then
         print_status "Installing frontend dependencies..."
         npm install
     fi
-    
+
     # Test build
     print_status "Testing frontend build..."
     npm run build
-    
+
     cd ..
     print_success "Frontend is ready for Vercel deployment"
 }
@@ -137,7 +137,7 @@ prepare_vercel() {
 # Create deployment instructions
 create_deployment_instructions() {
     print_status "Creating deployment instructions..."
-    
+
     cat > DEPLOYMENT_INSTRUCTIONS.md << 'EOF'
 # Deployment Instructions
 
@@ -224,28 +224,28 @@ EOF
 main() {
     echo ""
     print_status "Starting deployment preparation..."
-    
+
     # Check requirements
     check_git
-    
+
     # Initialize git
     init_git
-    
+
     # Create commit
     create_commit
-    
+
     # Setup remote
     setup_remote
-    
+
     # Push to GitHub
     push_to_github
-    
+
     # Prepare for Vercel
     prepare_vercel
-    
+
     # Create instructions
     create_deployment_instructions
-    
+
     echo ""
     print_success "Deployment preparation completed!"
     echo ""

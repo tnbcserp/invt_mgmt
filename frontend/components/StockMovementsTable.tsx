@@ -11,11 +11,20 @@ interface StockMovementsTableProps {
   stockOut: any[]
 }
 
+interface MovementItem {
+  type: 'in' | 'out'
+  quantity: number
+  date: string
+  productName: string
+  remarks: string
+  'Product ID'?: string
+}
+
 export function StockMovementsTable({ stockIn, stockOut }: StockMovementsTableProps) {
   const [searchTerm, setSearchTerm] = useState('')
 
   const combinedMovements = useMemo(() => {
-    const movements = []
+    const movements: MovementItem[] = []
 
     // Add stock in movements
     stockIn.forEach(item => {
