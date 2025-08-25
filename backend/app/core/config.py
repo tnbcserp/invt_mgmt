@@ -19,6 +19,12 @@ class Settings(BaseSettings):
     # CORS Configuration
     ALLOWED_ORIGINS: List[str] = ["http://localhost:3000"]
 
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        # Handle Render's $PORT environment variable
+        if os.getenv('PORT'):
+            self.API_PORT = int(os.getenv('PORT'))
+
     @property
     def google_creds_dict(self):
         """Convert Google Sheets credentials string to dictionary"""

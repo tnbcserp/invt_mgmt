@@ -46,10 +46,12 @@ STOCK_IN_SHEET=Stock In
 STOCK_OUT_SHEET=Stock Out
 
 API_HOST=0.0.0.0
-API_PORT=$PORT
+API_PORT=8000
 DEBUG=False
 ALLOWED_ORIGINS=["https://your-frontend-domain.vercel.app"]
 ```
+
+**Note**: Render will automatically set the `PORT` environment variable, so you don't need to set `API_PORT` manually.
 
 ## 🎨 Frontend Deployment to Vercel
 
